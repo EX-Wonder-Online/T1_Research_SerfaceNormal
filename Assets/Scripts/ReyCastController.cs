@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ReyCastController : MonoBehaviour
 {
+    [SerializeField] GameObject arrowPrefab;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +23,8 @@ public class ReyCastController : MonoBehaviour
         RaycastHit hit = new RaycastHit();
         if (Physics.Raycast(ray, out hit, distance)) {
             GameObject hitObject = hit.collider.gameObject;
-            print(hitObject.name);
-            // （以下略）
+            if (hitObject.tag != "Wall") return;
+            Instantiate(arrowPrefab, hit.point, Quaternion.FromToRotation(transform.forward, hit.normal),hitObject.transform);
         }
     }
 }
